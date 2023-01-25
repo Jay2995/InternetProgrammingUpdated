@@ -1,0 +1,24 @@
+{
+  "name": "internetprogramming",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jay2995/InternetProgrammingUpdated.git"
+  },
+  "author": "Jose Aguayo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jay2995/InternetProgrammingUpdated/issues"
+  },
+  "homepage": "https://github.com/Jay2995/InternetProgrammingUpdated#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
