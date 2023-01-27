@@ -1,34 +1,44 @@
-// modules
-const express = require('express');
-const path = require('path');
-const router = express.Router();
-const app = express();
+const express = require('express')
+const app = express()
+const path = require('path')
+import { surveys } from './surveys'
+import { questions } from './questions'
 
-//Json Variables
-const surveys = require('./survey.json')
-const questions = require('./questions.json')
-
+app.use(express.static('./public'))
 const port = 5000
 
-//
+
+app.get('/', (req, res)=> {
+    res.sendFile(path.resolve(__dirname,'./index.html'))
+    
 
 
-app.get('/', (req, res) => {
-    res.send('MAIN PAGE')
+
+
+
+
+
+
+
 })
 
-app.get('/surveys', (req, res) => {
-    res.send(surveys)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.listen(port, () => {
+console.log(`listening on port :${port}`);
 
 })
-app.get('/questions', (req, res) => {
-    res.send(questions)
 
-})
-
-// app.get(`/surveys/${number}`)
-app.get('/surveys/:id', function(req, res){
-    res.send(surveys.json() + req.params.id)
-})
-
-app.listen(port, () => console.log(`app is listening on port ${port}`))
