@@ -23,11 +23,11 @@ const bachelorOption = document.querySelector('.bachelors')
 const container = document.getElementById('container')
 
 
-
+// ******************
 
 //new student api
 
-const newStudent = async function(){
+const getStudent = async function(id){
    try{
    let newStudentId;
    let NewStudentQuestionsID = []

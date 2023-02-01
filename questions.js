@@ -1,4 +1,4 @@
-export const questions = 
+const questions = 
 [
     {
       "id": 1,
@@ -49,3 +49,4 @@ export const questions =
   ]
 
 
+module.exports = {questions}

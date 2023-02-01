@@ -1,4 +1,4 @@
-export const survery = [
+    const surveys = [
     {
       "id": 1,
       "title": "New student survey",
@@ -22,3 +22,4 @@ export const survery = [
       ]
     }
   ]
+module.exports = {surveys}
