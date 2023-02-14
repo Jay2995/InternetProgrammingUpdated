@@ -4,7 +4,10 @@ const app = express()
 const path = require('path')
 const {questions} = require('./questions')
 const {surveys} = require('./surveys')
+const cors = require("cors")
 
+
+app.use(cors())
 app.use(express.static('./public'))
 const port = 5000
 
@@ -45,13 +48,6 @@ app.get('/questions/:questionsID', (req, res)=>{
     })
         return res.status(200).json(id)
 })
-
-
-
-
-
-
-
 
 
 
