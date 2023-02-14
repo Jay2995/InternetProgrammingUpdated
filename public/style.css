@@ -55,3 +55,34 @@ table, th, td {
   width: 100%;
   height: 100%;
 }
+
+.surveyDiv{
+  background-color: rgba(49, 53, 53, 0.205);
+}
+.surveyDiv h1{
+  font-size: large;
+  color: brown;
+  margin-bottom: 10px;
+  text-decoration: underline;
+
+}
+.surveyDiv h2{
+  font-size: medium;
+}
+
+.surveyDiv h3{
+  font-size: 15px;
+  text-decoration: underline;
+}
+.surveyDiv h4{
+  font-size: 13px;
+}
+
+.tick{
+  height: 0.7rem;
+  width: 0.7rem;
+  margin-right: 0.2rem;
+}
+.tick label{
+  font-size: 1px;
+}

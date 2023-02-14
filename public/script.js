@@ -6,131 +6,79 @@ document.getElementById("changeThis3").textContent = 3;
 document.getElementById("changeThis4").textContent = 4;
 
 
-//container 
 
 document.querySelectorAll(".rows").forEach(element => 
    element.style.backgroundColor = "rgb(8,100,100)")
 
-
-// console.log(document.querySelectorAll(".rows"));
 const feedbackCommentByUser = document.querySelector('.comment')
-// console.log(feedbackCommentByUser);
 const sendButton = document.querySelector('input[type=submit]')
 const resetBtn = document.querySelector('input[type=reset]')
 const feedback = document.getElementById('feedbackReturn')
 const studentOption = document.querySelector('.student')
 const bachelorOption = document.querySelector('.bachelors')
-const container = document.getElementById('container')
+let surveyDiv = document.querySelector('.surveyDiv')
+
+const clear = function(){
+   surveyDiv.innerHTML = ''
+}
 
 
 // ******************
 
+// use localhosted json
+// 'http://localhost:5000/surveys/'
+// 'http://localhost:5000/questions/'
+
+
+
+
 //new student api
 
-const getStudent = async function(id){
-   try{
-   let newStudentId;
-   let NewStudentQuestionsID = []
-   const res1 = await fetch('https://my-json-server.typicode.com/depth0/survey1/surveys')
-   let data1 = await res1.json()
-   data1 = data1[0]
-   console.log(data1);
-   newStudentId = data1.id
-   console.log(newStudentId);
-   ////////survery 
-   NewStudentQuestionsID = data1.qs
-   console.log(NewStudentQuestionsID); 
-   const res2 = await fetch('https://my-json-server.typicode.com/depth0/survey1/questions')
-   let data2 = await res2.json()
-   let data2Questions = await data2.map(x => {
-      return x.id
-   })  
-
-   container.insertAdjacentHTML('afterend',
-   `<h2>${data1.title}</h2>
-   <h3>${data1.desc}</h3>
-   
-   <h4>1. ${data2[2].title}</h4>
-   <h4>${data2[2].description}</h4>
-   ${data2[2].options.map(e =>{
-      return `<input type="radio"><label> ${e}</label> <br>`
-   }).join("")}
-   <h4>2. ${data2[3].title}</h4>
-   <h4> ${data2[3].description}</h4>
-   <textarea class="answer" rows="6" cols="30" name="commentfield" placeholder="Enter your answer"></textarea> 
-   <br> 
-
-   <button type="submit" name="formBtn">
-   Submit
-   </button>
-   `
-   )
-}catch(err){
-console.log(err);
-}
-}
-
-
-
-////bachelor stundent
-const bachelorStudent = async function(){
+const newStudent = async function(id){
    try {
-   let newStudentId;
-   let NewStudentQuestionsID = []
-   const res1 = await fetch('https://my-json-server.typicode.com/depth0/survey1/surveys')
-   let data1 = await res1.json()
-   data1 = data1[1]
-   console.log(data1);
-   newStudentId = data1.id
-   console.log(newStudentId);
-   ////////survery 
-   NewStudentQuestionsID = data1.qs
-   console.log(NewStudentQuestionsID); 
-   const res2 = await fetch('https://my-json-server.typicode.com/depth0/survey1/questions')
-   let data2 = await res2.json()
-   let data2Questions = await data2.map(x => {
-      return x.id
-   })  
-
-   container.insertAdjacentHTML('afterend',
+    surveyDiv = document.querySelector('.surveyDiv')
+   const res = await fetch
+   // (`https://my-json-server.typicode.com/depth0/survey1/surveys/${id}`)
+   (`http://localhost:5000/surveys/${id}`)
+   let data = await res.json()
+   console.log(data);
+   surveyDiv.innerHTML +=
    
-   `<h2>${data1.title}</h2>
-   <h3>${data1.desc}</h3>
-   
-   
-   <h4>1. ${data2[0].title}</h4>
-   <h4> ${data2[0].description}</h4>
-   ${data2[0].options.map(e =>{
-      return `<input type="radio"><label> ${e}</label> <br>`
-   }).join("")}
-
-
-   <h4>2. ${data2[1].title}</h4>
-   <h4> ${data2[1].description}</h4>
-   ${data2[1].options.map(e =>{
-      return `<input type="radio"><label> ${e}</label> <br>`
-   }).join("")}
-
-    <h4>3. ${data2[2].title}</h4>
-   <h4>${data2[2].description}</h4>
-   ${data2[0].options.map(e =>{
-      return `<input type="radio"><label> ${e}</label> <br>`
-   }).join("")}
-
-
-
-   <h4>4. ${data2[3].title}</h4>
-   <h4>${data2[3].description}</h4>
-   <textarea class="answer" rows="6" cols="30" name="commentfield" placeholder="Enter your answer"></textarea> 
-   <br>
-   <button type="submit" name="formBtn">
-   Submit
-   </button>
    `
-   )}catch(err){
+   <h1>${data.title}</h2>
+   <h2>${data.desc}</h3>`
+   
+      
+for (let index=0; index < data.qs.length; index++) {
+   let id = data.qs[index];
+         const response = await fetch 
+         // (`https://my-json-server.typicode.com/depth0/survey1/questions/${id}`)
+         (`http://localhost:5000/questions/${id}`)
+         const questions = await response.json()
+          surveyDiv.innerHTML +=
+          `<h3>${index + 1}. ${questions.title}</h2>
+          <h4>${questions.description}</h3> 
+          `
+         if (questions.type === "rate") {
+         questions.options.map(e =>{
+         surveyDiv.innerHTML += `<input class = "tick" type="radio"><label style="font-size: 15px" > ${e}</label> <br>`
+         }).join("")}
+         if (questions.type === "free") {
+            surveyDiv.innerHTML +=
+            `<textarea class="answer" rows="6" cols="30" name="commentfield" placeholder="Enter your answer"></textarea> 
+            <br>
+            <button type="submit" name="formBtn">
+            Submit
+            </button>
+            `
+         }
+      }
+   }catch(err){
       console.log(err);
+      
    }
 }
+
 
 
 sendButton.addEventListener('click', function(e){
@@ -138,28 +86,24 @@ sendButton.addEventListener('click', function(e){
    feedback.insertAdjacentHTML('beforeend', feedbackCommentByUser.value)
 })
 
-   //   
 
 
 studentOption.addEventListener('click',function(e){
-   // e.preventDefault()
-   newStudent()
-   // }else if(studentOption === true){
-   //    newStudent()
-   // }else if(bachelorOption === true){
-   //    bachelorStudent()
-   // }
-})
+   clear()
+      newStudent(1)
+   })
+
 bachelorOption.addEventListener('click',function(e){
-   // e.preventDefault()
+   clear()
+   
+      newStudent(2)
 
-   bachelorStudent()
 })
 
 
 
-   resetBtn.addEventListener('click', function(e){
-   // e.preventDefault()
-   feedbackCommentByUser.value = feedback.textContent = ''
+
+resetBtn.addEventListener('click', function(e){
+feedbackCommentByUser.value = feedback.textContent = ''
    
    })
