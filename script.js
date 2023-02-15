@@ -56,8 +56,8 @@ for (let index=0; index < data.qs.length; index++) {
          (`http://localhost:5000/questions/${id}`)
          const questions = await response.json()
           surveyDiv.innerHTML +=
-          `<h3>${index + 1}. ${questions.title}</h2>
-          <h4>${questions.description}</h3> 
+          `<h3>${index + 1}. ${questions.title}</h3>
+          <h4>${questions.description}</h4> 
           `
          if (questions.type === "rate") {
          questions.options.map(e =>{

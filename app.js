@@ -22,6 +22,27 @@ app.get('/surveys', (req, res)=> {
 })
 
 app.get('/questions', (req, res)=> {
+    const reject = () => {
+        res.setHeader("www-authenticate", "Basic");
+        res.sendStatus(401);
+      };
+    
+      const authorization = req.headers.authorization;
+    
+      if (!authorization) {
+        return reject();
+      }
+    
+      const [username, password] = Buffer.from(
+        authorization.replace("Basic ", ""),
+        "base64"
+      )
+        .toString()
+        .split(":");
+    
+      if (!(username === "user" && password === "password")) {
+        return reject();
+      }
     res.status(200).json(questions)
 })
 
@@ -42,6 +63,29 @@ app.get('/surveys/:surveyID', (req,res)=> {
 
 // routing questions
 app.get('/questions/:questionsID', (req, res)=>{
+
+    const reject = () => {
+        res.setHeader("www-authenticate", "Basic");
+        res.sendStatus(401);
+      };
+    
+      const authorization = req.headers.authorization;
+    
+      if (!authorization) {
+        return reject();
+      }
+    
+      const [username, password] = Buffer.from(
+        authorization.replace("Basic ", ""),
+        "base64"
+      )
+        .toString()
+        .split(":");
+    
+      if (!(username === "user" && password === "password")) {
+        return reject();
+      }
+
     const {questionsID} = req.params
     const id = questions.find(questions => {
         return questions.id === Number((questionsID))
